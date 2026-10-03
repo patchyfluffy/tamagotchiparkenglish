@@ -1,0 +1,112 @@
+# Small code/data changes to 0EXEC.BIN, applied by tools\build.ps1 (via codepatch.exe) after the text.
+# Format: file-offset  original-bytes  new-bytes  comment     (file offset = RAM address - 0x06010000)
+# codepatch refuses any change whose original bytes don't match, so a wrong offset can't slip through.
+# To switch a change off, put '#' in front of its line(s). Changes in one group belong together.
+#
+# Free space used for new code/data: 0x315B0-0x315F7, which held the text of a debug-only
+# animation viewer ("ごっちアニメみてみてチェック" etc.; drawn only by debug code at 0x060229F0-0x06022A3C).
+
+# --- A. Names end in the squeezed "TCHI" ([ = TC, ] = HI; see font-fixes.txt) instead of "っち" everywhere.
+# The name builder at 0x0602AA84 appends っ (AF) and ち (C1). We jump to a new routine that writes [ and ]
+# (the 30-byte name buffer is cleared first, so the result stays terminated), then jump back.
+0x1AB7E 6073931477019213376C06342720 D30B432B60730009000900090009 jump to the new routine (index in r0)
+0x1ABAC 00AF00C1 060415B0 the jump target address, stored where the っ/ち values were
+0x315B0 BADEAFC140B1C6D240D0C3D0C340C1AAAFB840004C52C3DEBADEAFC140CADEB0 E35B06347001E35D0634D301432B00090602AB8C000900090009000900090009 new routine: write [ ], jump back to 0x0602AB8C
+
+# --- B. The name entry screen starts in ABC (English) mode instead of hiragana
+# Mode byte at 0x06082AA4: 0 = hiragana, 1 = katakana, 2 = English. The setup routine (0x0602ABB4) now
+# stores 2 there (and still sets 0x06082AA5 to 0xFF), and the caller's second "mode = 0" is removed.
+0x1ABBC 23E0923AD11F2120 E1022310E0FF8031 setup: mode = 2; byte after it = 0xFF
+0x19B3E 22C0 0009 caller no longer resets mode to 0
+
+# --- C. (switched off) Name entry: name, cursor and ending shifted 10 pixels left, needed when TCHI took
+# 4 letter spaces. With the squeezed 2-space TCHI the original layout fits, so these stay off.
+#0x1AA34 E57C E572 name x 124 -> 114
+#0x1A252 707C 7072 cursor x 124 -> 114
+#0x1AA62 00CA 00C0 name ending x 202 -> 192
+
+# --- D. Top bar day counter: digits move from positions 2-4 to 4-6 of the line, so it can read "DAY   1"
+# (the day line itself, "DAY     ", is in translations.tsv)
+0x12EC2 80D2 80D4 hundreds digit
+0x12EDA 80D3 80D5 tens digit
+0x12EE8 80D4 80D6 ones digit
+
+# --- E. Save/load screen day counter: digits move from positions 0-2 to 3-5 (template "DAY   " in
+# translations.tsv). The function stores pointers to the three digit positions once; the draw computes the
+# buffer start (stack+68) separately, so only these three pointer setups change.
+0x2034A 7244 7247 hundreds digit -> stack+71
+0x2035C 7345 7348 tens digit -> stack+72
+0x20362 7146 7149 ones digit -> stack+73
+
+# --- F. Top bar season: read from a new table with 8 bytes per season (was 3, i.e. 2 letters max)
+# and draw it at x=120 (was 147) so a 6-letter season ends before the day counter at x=208.
+0x12EFA 63434400343C644E63F3 440844000009644ED30B season index * 8, table address from the literal below
+0x12F30 06041620 060415D0 that literal: the new table (the old copy of the season table at 0x06022E44 is gone: see group G)
+0x12F20 0093 0078 season x 147 -> 120
+# The table itself: SPRING, RAINY (rainy season), SUMMER, FALL, WINTER; 7 letters max each, zero-padded to 8.
+0x315D0 BCDEAEDD40CDDDB600FFFFFFBBD5B3C3DE40B1C6D240CDDDB600FFFFBCDEAEB3B9DEC3DEBADEAFC1 535052494E4700005241494E5900000053554D4D4552000046414C4C0000000057494E5445520000 seasons
+
+# --- G. Top bar clock reads "11 AM" / "12 PM" instead of "AM 11" / "PM 0".
+# The game keeps the hour as 0-23 and showed it Japanese-style (noon = PM 0, midnight = AM 0).
+# New clock text "   AM" at 0x060415F8 (tens digit, ones digit, space, A/P, M), 4-byte aligned so it is
+# copied with two 4-byte moves. That shrinks the copy enough to fit the new logic in place:
+#   hour >= 12: write P at position 3 and subtract 12; then hour 0 becomes 12.
+# The block also dropped the dead copy of the old season table (unused since group F).
+0x315F8 BCADD9B2CDDDB600 202020414D000000 clock text "   AM" (end of the debug anim-viewer text)
+0x12F28 06041619 060415F8 clock text literal -> the new text (old "AM    " at 0x31619 is now unused)
+0x12E1C D24261F3602073F771102100842180118422801284238013842480148425801584268016D93AE010D33A61F354916E4362326C43049C2122523111215232730C1122710C62352121623471022120624CE10C32138F0373F1E05034182A00EB0AD32D614C D24260221F0450211F05D941E01054916E436C43049CE10C34138F03EB0AE05080A3341824488B00E40CD33B614C000900090009000900090009000900090009000900090009000900090009000900090009000900090009000900090009000900090009 copy text, load hour, AM/PM + 12-hour logic, then nops
+0x12E8A 80A2 2A00 tens digit "1" -> position 0
+0x12E9C 80A3 80A1 ones digit -> position 1
+
+# --- I. Save/load screen season in English. Each slot box has room for 3 letters before the hour
+# (the hour starts 43 px in), so: SPR, RNY, SUM, FAL, WIN. The original copied a 2-letter table
+# (はる/つゆ/なつ/あき/ふゆ, 3 bytes each) onto the stack. Now that copy is replaced by: put the address
+# of a new 4-byte-per-season table (stored right here, jumped over) in the free stack slot sp+52.
+# The per-slot draw then reads the address from sp+52 and uses index*4.
+0x20302 62F3601072342200E40084116B4380218412802284138023841480248415802584168026841780278418802884198029841A802A841B802B841C802C841D802D841E802E C7021F0DE400A01D6B4353505200524E590053554D0046414C0057494E000009000900090009000900090009000900090009000900090009000900090009000900090009 table address -> sp+52, r4=r11=0, jump over the table SPR/RNY/SUM/FAL/WIN
+0x204CA 63434400343C644E63F37334 4408644E53FD000900090009 season = table (from sp+52) + index*4
+0x20662 63434400343C644E63F37334 4408644E53FD000900090009 the same for the second slot layout (used e.g. for a save with a dead pet), found in test 15
+# Hour moved 4 px right (x+43 -> x+47) so it doesn't touch the 3-letter season ("SPR15H" in test 16):
+0x20524 752B 752F hour x, first slot layout
+0x206BC 752B 752F hour x, second slot layout
+# The save screen has FOUR slot layouts (found in test 20: seasons after spring were garbled on some saves):
+0x2081E 63434400343C644E63F37334 4408644E53FD000900090009 season, third slot layout
+0x209DE 63434400343C644E63F37334 4408644E53FD000900090009 season, fourth slot layout
+0x20878 752B 752F hour x, third slot layout
+0x20A38 752B 752F hour x, fourth slot layout
+
+# --- J. Options screen labels: SPEED / SOUND / EXIT. The labels are drawn one letter at a time (so the
+# letters can bob up and down) by 0x0602B3E8, from lists of pointers to one-letter texts (list table
+# at 0x3435C). The one-letter texts sit in 4-byte slots at 0x316A0-0x316E3; the lists at 0x34304
+# (7 letters + end), 0x34324 (8 + end) and 0x34348 (4, end at 0x34358).
+# The SPEED / SOUND / EXIT lines in translations.tsv (0x31720/0x3172C/0x31738) are NOT what the screen shows.
+0x316A0 BCDE00FFB600FFFFDD00FFFFC900FFFFC500FFFFB6DE00FFDA00FFFFBB00FFFFB300FFFFC4DE00FF 5300FFFF5000FFFF4500FFFF4400FFFF4F00FFFF5500FFFF4E00FFFF5800FFFF4900FFFF5400FFFF letter slots S P E D O U N X I T
+0x34304 060416A0060416A4060416A8060416AC060416B0060416B4060416B800000000060416BC060416C0060416A8060416C4060416C8060416CC060416D0060416D400000000060416D8060416DC060416E0060416D4 060416A0060416A4060416A8060416A8060416AC000000000000000000000000060416A0060416B0060416B4060416B8060416AC00000000000000000000000000000000060416A8060416BC060416C0060416C4 lists: SPEED, SOUND, EXIT
+
+# --- H. Pet info panels 112 -> 124 pixels wide, so a name of 9 letter spaces fits (KUCHIPA[]).
+# The panel slides in 128 px from the right edge, so it still ends 4 px inside the screen.
+0x0BCDE E670 E67C panel width
+0x0BD6E E670 E67C panel width
+0x0BE0E E670 E67C panel width
+# (0x0BE6A, the one-line name label, is replaced as a whole by group L)
+0x0BF7E E670 E67C panel width
+0x0C286 E670 E67C panel width
+
+# --- K. Egg room name bar: the name is drawn at a fixed x=121, which centred the 6-letter Japanese in the bar
+# (centre x=160). EGG ROOM is 8 letters (104 px), so it starts at x=108.
+0x1039A E579 E56C egg room bar text x 121 -> 108
+
+# --- L. Grave card and name labels.
+# The grave card's stat labels started at card x+89 with the bars 39 px later (3 letters). Labels now start
+# at x+76 and the bars 52 px later (4 letters, DISC/BODY), so the bars stay where they were.
+0x0C676 7059 704C stat labels x+89 -> x+76
+0x0C686 7027 7034 bars 39 -> 52 px after the label
+# The card's two right-aligned names (pet name in blue, species) ended on the card's border: right edge 180 -> 176.
+0x0C6F4 00B4 00B0 right edge of the names
+# The one-line name label (places like EGG ROOM / HISTORY, etc.; 0x0601BE64) drew a fixed-size box with the
+# name at its left edge. Now it calls 0x0601BAE4, which draws a box sized to the text with the text centred,
+# centred where the old 112 px box was (x+56, y+10).
+0x0BE64 2FE6E715D30FE670D20F2FD64F226D316E2165E3BE4664D3D30C7D04D2147E04420B643220088D086403E7024F2666E3D30865D36DF6432B6EF64F266DF6000B6EF6FFFF 2FE62FD64F22D30F6D31D30F6E31D30FD217420B643220088D06640365D3753866E3760ABE2C00094F266DF6000B6EF60009000900090009000900090009000900090009 one-line name label: box sized to the name, name centred
+# Grave card contest results: the place digit went over the 1st letter of " ばん" ("2ばん"); now over the 4th of NO.? ("NO.2").
+# mov.b @r10,r3 / add #49,r3 / mov.b r3,@r2  ->  mov.b @r10,r0 / add #49,r0 / mov.b r0,@(3,r2)  (r0 is reloaded right after)
+0x0C792 52F163A073312230 52F160A070318023 place digit -> 4th letter

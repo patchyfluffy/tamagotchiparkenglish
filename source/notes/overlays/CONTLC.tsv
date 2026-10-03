@@ -1,0 +1,57 @@
+# CONTLC.BZ: the lunch contest (のこさずランチ!, the MANNERS CONTEST). Format: see MINI00.tsv.
+# Full text list: notes\script-CONTLC.tsv. Box list: notes\boxes-CONTLC.txt.
+#
+0x01EA8	のこさずランチ!	CLEAN PLATE!	title box: "leave-nothing lunch!"
+0x01EB4	ポーズ!!	PAUSE!!
+0x01EC0	ほんじつのメニュー	MENU	"today's menu", under the 4 food pictures (LUNCH MENU ran past its box)
+0x01ECD	 ばん	NO.?	each contestant's place in the results ("1ばん" = "No. 1"). The code copies 5 bytes and writes the digit at the 4th letter (CONTLC-code.txt; it was the 1st)
+0x01ED2	しっかく	OUT	"disqualified", in the results (shown instead of NO.n; the code copies 5 bytes)
+0x01ED7	の	{empty}	"の" ("'s") after the species name in the contestant intro ("BABYTCHIの" then the name). Left empty. (The code copies 2 bytes from here.)
+0x01EDC	それでは	AND NOW	"well then..."
+0x01EE4	よーい	READY
+0x01EE8	スタート!!	START!!
+0x022F4	エントリーNO?	ENTRY NO.?	the game writes the entry number over the ? (10th character): keep it there
+# Intro sequence
+0x0202C	しつけコンテスト「のこさずランチ!」	MANNERS CONTEST!	"discipline contest: leave-nothing lunch!"
+0x02044	さいしょに	FIRST,
+0x0204C	さんかしゃをしょうかいしよう	MEET THE CONTESTANTS!	"let's introduce the contestants"
+0x0205C	そして!!	AND NOW!!
+0x02064	ほんじつのメニューは!!	THE MENU IS...!!	"today's menu is...!!"
+0x02074	これだ!!!	THIS!!!
+# Results
+0x01F68	やったね! ゆうしょうだ!	YOU DID IT! YOU WIN!
+0x01F78	よしよし! 2ばんだ!	NICE! 2ND PLACE!
+0x01F88	まずまず! 3ばんだ!	NOT BAD! 3RD PLACE!
+0x01F98	ざんねん・・・ ビリ・・・	TOO BAD... LAST...
+0x01FAC	・・・しっかく・・・	...DISQUALIFIED...
+# Rival contestants (they seem to be named after the staff). [] = squeezed TCHI.
+0x01EF4	ともっち	TOMO[]
+0x01EFC	あやっち	AYA[]
+0x01F04	ゆうっち	YUU[]
+0x01F0C	うららっち	URARA[]
+0x01F14	みやっち	MIYA[]
+0x01F1C	うっち	U[]
+0x01F20	あきおっち	AKIO[]
+0x01F28	しおしおっち	SHIOSHIO[]
+0x01F30	ヒトシっち	HITOSHI[]
+0x01F38	ぽっち	PO[]
+0x01F40	ぺっち	PE[]
+0x01F48	ぱんっち	PAN[]
+0x01F50	べんっち	BEN[]
+0x01F58	ぺんっち	PEN[]
+0x01F60	くらっち	KURA[]
+#
+# Instructions: "Feed it the 4 foods in order! Finish everything first and you win!"
+box	0x02188
+|{0}FEED THE {4}4 FOODS
+|{5}IN ORDER{0}!
+|
+|{4}EAT IT ALL {5}FIRST
+|{0}AND {3}YOU WIN{0}!
+endbox
+#
+# Controls: A/C = decide, left/right = choose.
+box	0x0223C	left
+|{5,3,0004}A{5,3,0002}C{0}:{0,3,0006}OK
+|{5,3,00C0}<>{0}:{0,3,00C0}PICK
+endbox

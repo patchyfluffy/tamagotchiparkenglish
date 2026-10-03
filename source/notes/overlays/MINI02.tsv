@@ -1,0 +1,29 @@
+# MINI02.BZ: the hurdle race (ジャンピングハードル!, the FITNESS UP GAME). Format: see MINI00.tsv.
+# Full text list: notes\script-MINI02.tsv. Box list: notes\boxes-MINI02.txt (its first "box" there
+# starts 4 bytes early by mistake; the real instruction box is at 0x01984).
+#
+0x01824	ジャンピングハードル!	JUMPING HURDLES!	title box
+0x01838	ポーズ!!	PAUSE!!
+0x0187C	ヨーイ	READY
+0x01884	どん!!	GO!!
+0x0188C	やった!もくひょうクリア!	YAY! YOU MADE IT!	"yay! target cleared!"
+0x0189C	ざんねん!タイムオーバー	TOO BAD! TIME UP!	"too bad! time over"
+# Top box: "TARGET 16.00 SEC / TIME 0.00 SEC". The time is drawn 87 px after the label starts: 6 letters max.
+0x01A80	もくひょう	TARGET
+0x01A86	タイム	TIME
+0x01A8C	びょう	SEC	"seconds", drawn after each time
+#
+# Instructions: "Jump the hurdles and reach the goal within the target time!"
+box	0x01984
+|{0}JUMP THE {4}HURDLES
+|{0}AND {3}REACH THE GOAL
+|{0}WITHIN THE
+|{5}TARGET TIME{0}!
+endbox
+#
+# Controls: A/C = jump, right = speed up, left = speed down.
+box	0x019FC	left
+|{5,3,0004}A{5,3,0002}C{0}:{0,3,0006}JUMP
+|{5,3,0080}>{0}:{0,3,0080}FASTER
+|{5,3,0040}<{0}:{0,3,0040}SLOWER
+endbox

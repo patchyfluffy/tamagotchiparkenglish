@@ -1,0 +1,312 @@
+# Translation sheet for text in 0EXEC.BIN. Used by tools\build.ps1 (via textpatch.exe).
+# Columns (tab-separated): offset	Japanese (must match the disc)	English	note
+# English: capitals, numbers and basic punctuation only (the game's font has no lowercase), and no '@'.
+# Avoid apostrophes ('): the bold font, used on some screens, has a different symbol in that slot.
+# Preview before building: tools\textpreview.exe draws text with the game's font (see its header for usage).
+# Each letter is drawn 13 pixels apart; keep menu labels short.
+# Spaces at the start of a column matter (some labels are indented by one space): keep them.
+# Note column "room=N": the line is in a fixed-size table and must stay put, with at most N-1 letters.
+# "[]" is the squeezed TCHI ([ = TC, ] = HI, drawn in font-fixes.txt): 2 characters wide on screen, so
+# BABY[] shows as BABYTCHI in the space of 6 letters. Use it for every -TCHI name ending.
+# Full list of the game's text: notes\script-0EXEC.tsv
+#
+# --- Options menu (title box, setting names, setting values)
+0x3167C	おぷしょん	OPTIONS	title box
+0x31720	じかんのながれ	SPEED	"flow of time"; label starts at a fixed spot, longer text runs into the SPEED icon
+0x316E4	おそい	SLOW
+0x316E8	ふつう	NORMAL
+0x316EC	はやい	FAST
+0x316F0	とてもはやい	VERY FAST
+0x316F8	ムリからにはやい	CRAZY FAST	joke: "unreasonably fast"
+0x31704	ウラッぱやい	ULTRA FAST	joke: "secretly fast"
+0x3172C	さうんどせってい	SOUND	"sound settings"
+0x31710	モノラル	MONO
+0x31718	ステレオ	STEREO
+0x31738	おしまい	EXIT	"the end"; leaves the menu
+#
+# --- Boot warning (save problems). Drawn at 0x06030F70.
+# Top box: one of the next three lines, centered at (160,64) in a box that sizes itself. Keep to ~22 letters.
+0x31868	たまごっちメモリーがさしこまれていません	NO TAMAGOTCHI MEMORY	"the Tamagotchi Memory isn't inserted"
+0x318EC	たまごっちデータがそんざいしません	NO TAMAGOTCHI DATA	"Tamagotchi data doesn't exist"
+0x31904	たまごっちデータがこわれています	SAVE DATA IS DAMAGED	"Tamagotchi data is broken"
+# Bottom box: fixed box (x 20-300), lines left-aligned at x=24, 16px apart. MAX 21 LETTERS PER LINE.
+# With a damaged save, only the first two lines are shown, so those two must make sense alone.
+0x31884	このままゲームをかいししたばあいきろくを	IF YOU PLAY,	"if you start the game like this, your records..."
+0x318A0	ほぞんすることができません。	YOU CANNOT SAVE.	"...can't be saved." (no apostrophes here: this screen uses the bold font, whose ' slot holds a different symbol)
+0x318B4	いちどでんげんをきり、たまごっちメモリーを	TURN OFF THE SYSTEM,	"turn the power off once, and the Tamagotchi Memory..."
+0x318D0	さしこんでからゲームをはじめてください。	INSERT MEMORY, RETRY.	"...insert it, then start the game."
+#
+# --- Care menu (icon row; only the selected icon's label shows, so labels can be a bit longer)
+0x31100	ヘルプ	HELP
+0x31108	しょくじ	FOOD	"meal"
+0x31110	あそぶ	PLAY
+0x31118	トイレ	TOILET
+0x31120	しかる	SCOLD
+0x31124	ちりょう	MEDICINE	"treatment"
+0x3112C	ミニたまごハウス	MINI EGG HOUSE
+0x3113C	コンテスト	CONTEST
+0x31180	ちゅうしゃ	SHOT	"injection"
+0x31188	カプセル	PILL	"capsule"
+0x311E4	ほめる	PRAISE
+#
+# --- Food
+0x31144	ごはん	MEAL
+0x3114C	おやつ	SNACK
+0x311BC	おにぎり	RICE BALL
+0x311C4	おにく	MEAT
+0x311CC	まんじゅう	BUN	"manju, a sweet bun"
+0x311D4	アイス	ICE CREAM
+0x311DC	ケーキ	CAKE
+0x311F8	シロップ	SYRUP
+0x31200	パイ	PIE
+0x31208	クレープ	CREPE
+0x31210	キャンデー	CANDY
+0x3121C	キャラメル	CARAMEL
+0x31224	チョコ	CHOCOLATE
+#
+# --- Games and contests
+0x31150	ごきげんUPゲーム	MOOD UP GAME	"mood-up game" (names match the stat labels)
+0x31160	ちりょくUPゲーム	IQ UP GAME	"intelligence-up game"
+0x31170	たいりょくUPゲーム	FITNESS UP GAME	"stamina-up game"
+0x311E8	がんばるUPゲーム	GUTS UP GAME	"try-hard-up game"
+0x31190	しつけコンテスト	MANNERS CONTEST	"discipline contest"
+0x3119C	がくりょくコンテスト	IQ CONTEST	"academic contest"
+0x311AC	たいりょくコンテスト	FITNESS CONTEST
+0x31314	ラブリーコンテスト	LOVELY CONTEST
+0x312F8	ごきげんUP	MOOD UP
+0x31304	ちりょくUP	IQ UP
+0x3130C	たいりょくUP	FITNESS UP
+0x31324	ガンバルUP	GUTS UP
+0x31270	イチゴ	STRAWBERRY
+0x31278	サカナ	FISH
+0x31280	スイカ	WATERMELON
+0x31288	キノコ	MUSHROOM
+0x31290	だいこん	RADISH
+0x32364	ゆうしょう	NO.1	"won the contest"; grave card contest results: 4 letters max (DISC starts after them)
+0x3236A	しっかく	OUT	"disqualified"; grave card, 4 letters max
+0x3236F	 ばん	NO.?	grave card place: the code writes the place digit over the ? (4th letter; code-patches.txt group L)
+#
+# --- Stats. The status panel's label column is exactly 4 letters wide (hearts start right after),
+# so these are 4 letters max; shorter ones are right-aligned with spaces like the Japanese.
+0x31298	 おなか	FOOD	"tummy" (hunger)
+0x312A0	ごきげん	MOOD	"good mood"
+0x312A8	 しつけ	DISC	"discipline"
+0x312B0	 おつむ	  IQ	"noggin" (smarts)
+0x312B8	 からだ	BODY
+0x312C0	ガンバル	GUTS	"try hard"
+0x312CC	しあわせ	JOY	"happiness"
+0x312D4	しつけ	DISC
+0x312D8	おつむ	IQ
+0x312DC	からだ	BODY
+# Grave card seasons (pointer table at 0x32350). 3 letters max: the weight is drawn 39 px after the season.
+0x312E4	はる	SPR	spring
+0x312E8	つゆ	RNY	rainy season
+0x312EC	なつ	SUM	summer
+0x312F0	あき	FAL	fall
+0x312F4	ふゆ	WIN	winter
+#
+# --- Second time-speed menu, and save choices
+0x3123C	じかんのながれ	SPEED	"flow of time" (another menu's copy)
+0x31248	ちゅうだん	STOP	"suspend"; also used by a code path at 0x0CE9C next to HELP
+0x31250	おそい	SLOW
+0x31254	ふつう	NORMAL
+0x31258	はやい	FAST
+0x3125C	とてもはやい	VERY FAST
+0x31264	ムリからにはやい	CRAZY FAST
+0x3122C	きろくする	SAVE	"record it"
+0x31234	きろくしない	DO NOT SAVE	no apostrophes (bold font)
+#
+# --- Park and name entry
+0x313D0	たてもの	BUILDINGS
+0x314F8	たまごルーム	EGG ROOM
+# (かな/カナ, the hiragana/katakana buttons, stay Japanese: each has room for only 2 letters, and they
+#  fit exactly. Name entry now starts in ABC mode; see code-patches.txt, group B.)
+0x31660	えいご	ABC	name entry: English mode
+0x31668	おわり	END	name entry: done
+0x3166C	っち	[]	the name ending shown on the name entry screen. Elsewhere the ending is added by code: see code-patches.txt, group A
+#
+# --- Top bar clock and day counter. These are templates the game copies into fixed-size buffers, so their
+# length must stay EXACTLY the same, and the day line must stay put (it's copied with 4-byte reads).
+0x31610	     にちめ	DAY     	room=9; exactly 8 characters (DAY + 5 spaces). Digits go in positions 4-6 (code-patches.txt, group D)
+0x31619	AM  じ	AM    	room=7; NO LONGER USED: the clock now uses its own text at 0x315F8 (code-patches.txt, group G)
+# Save/load screen versions (copied byte by byte into fixed buffers; keep the exact lengths):
+0x31844	   にちめ	DAY   	room=7; exactly 6 characters. Digits go in positions 3-5 (code-patches.txt, group E)
+0x3185A	  じ	  H 	room=5; exactly 4 characters. Hour digits go in positions 0-1, so it reads " 9H"
+# (The save screen's seasons, はる/つゆ/なつ/あき/ふゆ at 0x3184B, are no longer used: the slots show SPR/RNY/SUM/FAL/WIN
+#  from a table inside the code, code-patches.txt group I. 3 letters max: the hour starts 43 px into the box.)
+0x31860	NODATA	EMPTY	empty save slot. 6 letters max (the slot box is 88 px wide; NO DATA would run past it)
+0x341DC	ヒストリーかん	HISTORY	room=10; park places: a table of 10-byte names, max 9 letters each
+0x341E6	たまごルーム	EGG ROOM	room=10
+0x341F0	トイレ	TOILET	room=10
+0x341FA	おはか	GRAVEYARD	room=10; its label box is a fixed 9 letters wide, so 9 letters fill it
+0x34204	ロケット	ROCKET	room=10
+0x3420E	すなば	SANDBOX	room=10
+0x34218	すべりだい	SLIDE	room=10
+#
+# --- Title screen menu (code at 0x06022514): a table of 10-byte entries, drawn left-aligned at x=130.
+# room=10, MAX 9 LETTERS. CONTINUE only shows when a save exists; the last three appear only after unlocks.
+0x32E48	さいしょ	NEW GAME	room=10; "from the beginning"
+0x32E52	つづき	CONTINUE	room=10
+0x32E5C	おぷしょん	OPTIONS	room=10
+0x32E66	えんでぃんぐ	ENDING	room=10; unlockable
+0x32E70	きゃらてすと	CHARACTER	room=10; "character test", unlockable
+0x32E7A	おとてすと	SOUNDTEST	room=10; "sound test", unlockable
+#
+# --- Character names. Each sits in a 10-byte name field at the start of a character's data record,
+# so: room=10, MAX 9 characters, written in place. The pet info panels were widened to fit 9 letter
+# spaces (code-patches.txt, group H; "[]" counts as 2). Official spellings where they fit, short forms
+# where the real name is too long. Skipped: だみー/だみーぷらぐ (unused "dummy" entries) and おばけっち2^.
+# Saturn-only characters (Sega in-jokes) and the sea family:
+0x33824	たまご	EGG	room=10
+0x33850	ちびろむっち	MINIROM[]	room=10; "little ROM-tchi"
+0x3387C	ろむっち	ROMU[]	room=10; from "ROM"
+0x338A8	でぃすくっち	DISC[]	room=10; from "disc" (the Saturn's CDs)
+0x338D4	かーとりっち	CART[]	room=10; from "cartridge"
+0x33900	おぱおぱっち	OPAOPA[]	room=10; Opa-Opa from Fantasy Zone
+0x3392C	ぺんごっち	PENGO[]	room=10; Pengo
+0x33958	ふりきっち	FURIKI[]	room=10
+0x33984	あれくっち	ALEX[]	room=10; Alex Kidd
+0x339B0	そにっくっち	SONIC[]	room=10; Sonic
+0x339DC	ちびうにっち	MINIUNI[]	room=10; "little sea urchin"
+0x33A08	こどもうにっち	KIDUNI[]	room=10; "kid sea urchin"
+0x33A34	ひとでっち	STAR[]	room=10; "starfish"
+0x33A60	うにっち	UNI[]	room=10; "sea urchin"
+0x33A8C	うみうっち	UMIU[]	room=10
+0x33AB8	でかうにっち	BIGUNI[]	room=10; "big sea urchin"
+0x33AE4	おれじゃじお	OREJAJIO	room=10; a pun name
+# Classic Tamagotchi characters:
+0x33B3C	たまご	EGG	room=10
+0x33B68	べびっち	BABY[]	room=10
+0x33B94	まるっち	MARU[]	room=10
+0x33BC0	たまっち	TAMA[]	room=10
+0x33BEC	たまっち	TAMA[]	room=10
+0x33C18	くちたまっち	KTAMA[]	room=10; Kuchitamatchi (13 letters, too long)
+0x33C44	くちたまっち	KTAMA[]	room=10
+0x33C70	まめっち	MAME[]	room=10
+0x33C9C	ぎんじろっち	GINJIRO[]	room=10
+0x33CC8	ますくっち	MASUKU[]	room=10; Masukutchi (official English spelling)
+0x33CF4	くちぱっち	KUCHIPA[]	room=10
+0x33D20	にょろっち	NYORO[]	room=10
+0x33D4C	たらこっち	TARAKO[]	room=10
+0x33D78	おやじっち	OYAJI[]	room=10
+# Second-generation characters (a separate list of 10-byte names):
+0x33DAE	たまご	EGG	room=10
+0x33DB8	しろべびっち	SHIRO[]	room=10; Shirobabytchi (too long)
+0x33DC2	とんまるっち	TONMARU[]	room=10
+0x33DCC	とんがりっち	TONGARI[]	room=10
+0x33DD6	とんがりっち	TONGARI[]	room=10
+0x33DE0	はしたまっち	HASHI[]	room=10; Hashitamatchi
+0x33DEA	はしたまっち	HASHI[]	room=10
+0x33DF4	みみっち	MIMI[]	room=10
+0x33DFE	ぽちっち	POCHI[]	room=10
+0x33E08	ずきっち	ZUKI[]	room=10
+0x33E12	はしぞーっち	HASHIZO[]	room=10
+0x33E1C	くさっち	KUSA[]	room=10
+0x33E26	たこっち	TAKO[]	room=10
+0x33E30	せきとりっち	SUMO[]	room=10; Sekitoritchi
+# Angels (Tenshitchi), 40-byte records:
+0x33EEC	おばけっち	OBAKE[]	room=10; "ghost-tchi"
+0x33F3C	まるてん	MARUTEN	room=10
+0x33F64	こどてん	KODOTEN	room=10
+0x33F8C	たこてん	TAKOTEN	room=10
+0x33FB4	くりてん	KURITEN	room=10
+0x33FDC	ぎんじろてんし	GINJITEN	room=10; "Ginjiro angel"
+0x34004	ぷくてん	PUKUTEN	room=10
+0x3402C	たらてん	TARATEN	room=10
+0x34054	おやじてんし	OYAJITEN	room=10; "Oyaji angel"
+0x3407C	ふたごてんし	TWINTEN	room=10; "twin angels"
+0x340A4	ふたごてんし	TWINTEN	room=10
+0x340CC	さぼてん	SABOTEN	room=10; a cactus pun
+0x340F4	おとのてん	OTONOTEN	room=10
+#
+# --- Graves, saving and loading
+0x31754	まいそう	BURY	"burial"
+0x3175C	のおはかです	 RESTS HERE	follows a name: "(name)'s grave"
+0x31768	うわがきしてもよいですか?	OK TO OVERWRITE?
+0x31784	おハカまいり	VISIT GRAVE
+0x317E4	たまごっちせいかつ	TAMAGOTCHI	the save file's comment (shown by memory managers, not in the game). The comment field holds 10 letters MAX
+0x317F0	データセーブ	SAVE DATA
+0x317FC	セーブちゅうです・・・	SAVING...
+0x3180C	データをうわがきしてもよろしいですか?	OVERWRITE SAVE DATA?
+0x31828	データロード	LOAD DATA
+0x31834	ロードちゅうです・・・	LOADING...
+0x30C50	ポーズ!!	PAUSE!!
+#
+# --- Save errors, set 1 (code at 0x06031208/125C/12A6): a centered title box, then a fixed box
+# (x 30-290) with lines at x=36: MAX 19 LETTERS per line in the fixed box.
+0x3191C	バックアップのあきようりょうがたりません	NOT ENOUGH SAVE SPACE	title box
+0x31938	このゲームのきろくをほぞんするためには	TO SAVE THIS GAME,
+0x31950	47ブロックのあきようりょうがひつよう	47 FREE BLOCKS ARE
+0x31968	です	NEEDED.
+0x3196C	このままゲームをかいししたばあい	IF YOU CONTINUE,
+0x31984	きろくをほぞんすることはできません	YOU CANNOT SAVE.
+0x31998	ほんたいRAMのじゅんびができていません	SYSTEM RAM NOT READY	title box
+0x319B4	ほんたいRAMのバックアップのじゅんび	SYSTEM RAM IS NOT
+0x319D0	がされていません	SET UP FOR SAVING.
+0x319DC	ほぞんデータかんりがめんですべての	ERASE ALL SAVES IN	shared by two messages
+0x319F8	きろくをけしてください	THE MEMORY MANAGER.	shared by two messages
+0x31A08	カートリッジRAMのじゅんびができていません	CART RAM NOT READY	title box
+0x31A28	カートリッジRAMのバックアップ	CART RAM IS NOT
+0x31A40	のじゅんびがされていません	SET UP FOR SAVING.
+# Save errors, set 2: single lines centered in boxes that size themselves (21 letters is proven to fit).
+0x31A54	きろくをただしくよみこめませんでした	COULD NOT LOAD SAVE.
+0x31A6C	セーブデータのバージョンがちがいマす	WRONG SAVE VERSION.
+0x31A8C	カートリッジがただしくセットされていないよ	CHECK THE CARTRIDGE!	casual "the cartridge isn't in right!"
+0x31AAC	でんきをきってカートリッジをさしなおしてね	TURN OFF, REINSERT.
+0x31AC8	データのかきこみにしっぱいしちゃった	OOPS! SAVING FAILED.	casual "oops, writing the data failed"
+0x31AE0	でんきをきってさいしょからやりなおしてね	TURN OFF, START OVER.
+0x31AF8	さぎょうはしゅうりょうしました	ALL DONE.
+0x31B18	さぎょうちゅうです・・・	WORKING...
+#
+# --- Returning a Tamagotchi to the stars (the old man's text box beside the rocket): 9 LETTERS MAX per line (test 20 showed longer lines running onto the rocket)
+0x31B28	を	{empty}	the particle を added after the chosen one's name ("<name>を ... ?"): blank in English. One letter, so the text list missed it
+0x31B2C	どのこをほしに	WHICH ONE
+0x31B38	かえすのじゃ?	GOES UP?
+0x31B44	ほんとうに	REALLY	shown under the chosen one's name
+0x31B4C	ほしにかえして	SEND THIS
+0x31B54	よいのじゃな?	ONE UP?
+0x31B60	さよならじゃ!	FAREWELL!
+
+# --- Character test (hidden title menu option CHARACTER): the developers' animation viewer.
+# Its four texts used to sit at 0x315B0-0x315FF, which now holds new code and tables (code-patches.txt groups A, F, G),
+# so 'keepold' moves the English elsewhere and leaves those bytes alone. All are drawn in boxes that size themselves.
+0x315B0	ごっちアニメみてみてチェック	ANIMATION VIEWER	keepold; title ("gotchi animation look-look check")
+0x315C4	LRでごっちバージョンへんか	L/R: CHANGE VERSION	keepold
+0x315DC	さゆうでアニメへんか	LEFT/RIGHT: ANIMATION	keepold
+0x315EC	じょうげでごっちしゅるいへんか	UP/DOWN: CHARACTER	keepold
+# Animation names: a table of 20-byte entries from 0x32E84 (pointer to the table at 0x12A78), shown in the viewer.
+0x32E84	つうじょう(N)	NORMAL (N)	room=20
+0x32E98	たべている	EATING	room=20
+0x32EAC	よろこぶ	HAPPY	room=20
+0x32EC0	おこる	ANGRY	room=20
+0x32ED4	すねる(いやいや)	SULKING (NO NO)	room=20
+0x32EE8	びょうき	SICK	room=20
+0x32EFC	ねる	SLEEP	room=20
+0x32F10	ごきげん(N)	GOOD MOOD (N)	room=20
+0x32F24	ふきげん(N)	BAD MOOD (N)	room=20
+0x32F38	よろこんでたべる	EATING HAPPILY	room=20
+0x32F4C	いやいやたべる	EATING RELUCTANTLY	room=20
+0x32F60	わがまま(N)	SELFISH (N)	room=20
+0x32F74	ねむい	SLEEPY	room=20
+0x32F88	おきる	WAKE UP	room=20
+0x32F9C	くうふく(N)	HUNGRY (N)	room=20
+0x32FB0	まんぷく	FULL	room=20
+0x32FC4	はっしゃじゅんび	READY TO LAUNCH	room=20
+0x32FD8	はっしゃ!!!	LAUNCH!!!	room=20
+0x32FEC	リリースごのおれ	ME AFTER RELEASE	room=20; a developer joke: "me after the game's release"
+0x33000	ほうしん	DAZED	room=20
+0x33014	なやむ	WORRIED	room=20
+0x33028	たえる	ENDURING	room=20
+0x3303C	かなしむ	SAD	room=20
+0x33050	ひんし	DYING	room=20
+0x33064	しぼう	DEAD	room=20
+0x33078	ババアそのみずのんでみろ	GRANNY, DRINK THAT!	room=20; a developer joke: "hey granny, try drinking that water"
+0x3308C	ケーイ!!!!	KEII!!!!	room=20; a shout
+0x330A0	あるき	WALK	room=20
+0x330B4	じゃんぷ	JUMP	room=20
+0x330C8	しゃがむ	CROUCH	room=20
+# Sound test (hidden title menu option SOUNDTEST): title box
+0x30C44	さうんどてすと	SOUND TEST
+# おばけっち2号 = Obaketchi No. 2 (号 is a special symbol in the bold font). Two name slots, 9 letters max.
+0x33F14	おばけっち2^	OBAKE[] 2	room=10
+0x3411C	おばけっち2^	OBAKE[] 2	room=10

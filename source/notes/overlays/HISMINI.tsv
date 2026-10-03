@@ -1,0 +1,55 @@
+# HISMINI.BZ: the history book (character pages and the staff credits). Format: see MINI00.tsv.
+# Full text list: notes\script-HISMINI.tsv.
+# Credits use full names. To make them fit (the file has about 600 bytes for all of its text): two developer
+# error messages are blanked, companies are just BANDAI / SEGA, and two roles use the usual GRAPHICS / MUSIC.
+#
+0x02B10	ポーズ!!	PAUSE!!
+# Page titles (the series each character comes from). The game sizes the title box to the text.
+0x02B4C	がんそたまごっち	ORIGINAL	がんそ = "the original". Title box is centered at x=104 and sized text+60: 11 letters max
+0x02B58	しんしゅたまごっち	NEW SPECIES	しんしゅ = "new species" (Shinshu Hakken!! Tamagotchi)
+0x02B64	てんしっち	TENSHITCHI	angel Tamagotchi
+0x02B6C	せがっち	SEGATCHI
+# Credits: roles
+0x02B74	エグゼクティブプロデューサー	EXECUTIVE PRODUCER
+0x02B98	プロデューサー	PRODUCER
+0x02BD4	ゲームデザイナー	GAME DESIGNER
+0x02BF0	グラフィックデザイナー	GRAPHICS
+0x02C34	サウンドコンポーザー	MUSIC
+0x02C5C	メインプログラマー	MAIN PROGRAMMER
+0x02C84	プログラマー	PROGRAMMER
+0x02CA8	せんでん	PUBLICITY
+0x02CBC	スペシャルサンクス	SPECIAL THANKS
+0x02D38	せいさく	PRODUCED BY
+0x02D40	(かぶ)バンダイ	BANDAI
+0x02D50	(かぶ)セガ・エンタープライゼス	SEGA
+# Credits: staff (given name initial, family name)
+0x02B8C	まにわ えいさく	EISAKU MANIWA	Eisaku Maniwa
+0x02BA4	あさぬま まこと	MAKOTO ASANUMA	Makoto Asanuma
+0x02BB0	うちやま だいすけ	DAISUKE UCHIYAMA	Daisuke Uchiyama
+0x02BBC	なかむら あつひこ	ATSUHIKO NAKAMURA	Atsuhiko Nakamura
+0x02BC8	みやなが けいすけ	KEISUKE MIYANAGA	Keisuke Miyanaga (listed twice)
+0x02BE4	うちむら かたる	KATARU UCHIMURA	Kataru Uchimura
+0x02C04	おおうら たかひろ	TAKAHIRO OURA	Takahiro Oura
+0x02C10	こしろ あやの	AYANO KOSHIRO	Ayano Koshiro
+0x02C18	たかはし あきお	AKIO TAKAHASHI	Akio Takahashi
+0x02C24	うが みほこ	MIHOKO UGA	Mihoko Uga
+0x02C2C	わだ まこと	MAKOTO WADA	Makoto Wada
+0x02C44	やながわ たけし	TAKESHI YANAGAWA	Takeshi Yanagawa
+0x02C50	こしろ ゆうぞう	YUZO KOSHIRO	Yuzo Koshiro
+0x02C6C	たかはし ひろし	HIROSHI TAKAHASHI	Hiroshi Takahashi
+0x02C78	こばやし かずとよ	KAZUTOYO KOBAYASHI	Kazutoyo Kobayashi
+0x02C90	こやま ひでき	HIDEKI KOYAMA	Hideki Koyama
+0x02C9C	みずおち ひろし	HIROSHI MIZUOCHI	Hiroshi Mizuochi
+0x02CB0	ささのい たかひろ	TAKAHIRO SASANOI	Takahiro Sasanoi
+0x02CCC	ほんごう たけいち	TAKEICHI HONGO	Takeichi Hongo
+0x02CD8	たがしら ひとみ	HITOMI TAGASHIRA	Hitomi Tagashira
+0x02CE4	わたなべ けんじ	KENJI WATANABE	Kenji Watanabe
+0x02CF0	みずがき じゅんこ	JUNKO MIZUGAKI	Junko Mizugaki
+0x02D00	ふじわら ひさし	HISASHI FUJIWARA	Hisashi Fujiwara
+0x02D0C	わたなべ ひろたか	HIROTAKA WATANABE	Hirotaka Watanabe
+0x02D18	みやけ たくみ	TAKUMI MIYAKE	Takumi Miyake
+0x02D20	にいむら たけし	TAKESHI NIIMURA	Takeshi Niimura
+0x02D2C	かわばた てつや	TETSUYA KAWABATA	Tetsuya Kawabata
+# Developer error messages (shown only if the history book runs out of memory): blanked to make room.
+0x02AD8	HISTORY  PALLET NUM OVER	{empty}
+0x02AF4	HISTORY  CHARWK NUM OVER	{empty}

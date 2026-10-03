@@ -1,0 +1,38 @@
+# MINI01.BZ: the panel game (パネルでドン!, the IQ UP GAME). Format: see MINI00.tsv / tools\textpatch.cs.
+# Full text list: notes\script-MINI01.tsv. Box list: notes\boxes-MINI01.txt.
+#
+0x012A8	パネルでドン!	PANEL BANG!	title box. "Panel de don!": don = a bang/thud sound
+0x012B8	ポーズ!!	PAUSE!!
+0x012C4	ヨーイ	READY	"ready..."
+0x012CC	どん!!	GO!!	"...go!!"
+0x01308	ざんねん!あとすこし	TOO BAD! SO CLOSE!	"too bad! almost there"
+0x01314	やった!もくひょうクリア	YAY! GOAL CLEARED!	"yay! target cleared"
+# Panel letters: each panel (and each letter in the example row) is one of these lines.
+# Set 1: あいうえお -> 12345. Set 2: パネルでドン -> JUMBLE. EVERY panel must look different, across all sets: the game mixes sets as decoys and matches by panel, not by letter (A/E/P were shared before test 22, causing false matches). The IQ contest adds たまごっち -> PARK!.
+0x012D4	あ	1
+0x012D8	い	2
+0x012DC	う	3
+0x012E0	え	4
+0x012E4	お	5
+0x012E8	パ	J
+0x012F0	ネ	U
+0x012F4	ル	M
+0x012F8	で	B
+0x012FC	ド	L
+0x01304	ン	E
+# "Chances left" box (top right). The box is widened and the number moved in MINI01-code.txt.
+0x014D2	チャンス	TRIES	"chances"
+0x014D9	のこり	LEFT	"left"; the number is drawn after it
+#
+# Instructions: "Arrange the panels just like the example!"
+box	0x01410
+|{3}LINE UP {0}THE {4}PANELS
+|{5}JUST LIKE {0}THE
+|{0}EXAMPLE!
+endbox
+#
+# Controls (top left): A/C = choose ("おしえる"), left/right = move. < and > are arrows in the bold font.
+box	0x01470	left
+|{5,3,0004}A{5,3,0002}C{0}:{0,3,0006}SELECT
+|{5,3,00C0}<>{0}:{0,3,00C0}MOVE
+endbox

@@ -1,0 +1,24 @@
+# MINI03.BZ: dodge the shooting stars (クルージングスター!, the GUTS UP GAME). Format: see MINI00.tsv.
+# Full text list: notes\script-MINI03.tsv. Box list: notes\boxes-MINI03.txt.
+#
+0x01834	クルージングスター!	SHOOTING STAR!	title box (literally "Cruising Star"; you dodge shooting stars)
+0x01844	ポーズ!!	PAUSE!!
+0x01850	ガンバル	GUTS	label before the hearts (4 letters, like the status panel)
+0x0185C	ヨーイ	READY
+0x01864	どん!!	GO!!
+0x0186C	ざんねん!あとすこし	TOO BAD! SO CLOSE!	"too bad! almost there"
+0x01878	やった!もくひょうクリア	YAY! GOAL CLEARED!	"yay! target cleared"
+0x01888	パーフェクト	PERFECT!
+#
+# Instructions: "Dodge the shooting stars by moving up and down!"
+box	0x01950
+|{5}MOVE UP AND DOWN
+|{3}TO DODGE
+|{4}SHOOTING STARS{0}!
+endbox
+#
+# Controls: up = rise, down = sink.
+box	0x019A4	left
+|{5,3,0010}UP{0}:{0,3,0010}CLIMB
+|{5,3,0020}DOWN{0}:{0,3,0020}DIVE
+endbox

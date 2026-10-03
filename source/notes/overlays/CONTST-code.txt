@@ -1,0 +1,4 @@
+# Code changes in CONTST (offsets within the unpacked overlay; it loads at 0x00280000).
+# Race intro: the lane number was written over the 1st letter of "?コース" ("3コース"). For "LANE 3" it goes over
+# the 6th: mov.b @r9,r3 / add #49,r3 / mov.b r3,@r4 -> mov.b @r9,r0 / add #49,r0 / mov.b r0,@(5,r4) (r0 is free here).
+0x01BAE 639073312430 609070318045 lane digit -> 6th letter

@@ -1,0 +1,8 @@
+# Code changes in CONTLC (offsets within the unpacked overlay; it loads at 0x00280000).
+# Results: each contestant's place is " ばん" with the digit written over the 1st letter ("1ばん").
+# In English it is "NO.?" with the digit over the 4th letter, so each of the 4 writes
+# mov.b r0,@r9 becomes mov.b r0,@(3,r9).
+0x01478 2900 8093 place digit -> 4th letter (contestant 1, at 0x00281478)
+0x014A6 2900 8093 place digit -> 4th letter (contestant 2, at 0x002814A6)
+0x014D4 2900 8093 place digit -> 4th letter (contestant 3, at 0x002814D4)
+0x01502 2900 8093 place digit -> 4th letter (contestant 4, at 0x00281502)

@@ -1,0 +1,5 @@
+# Code changes in MINI01 (offsets within the unpacked overlay; it loads at 0x00280000).
+# "Chances left" box: drawn at x=204 with width 56 (4 letters), number at x=245. English "TRIES / LEFT n"
+# needs 6 letter spaces: width 56 -> 82, number x 245 -> 271 (box still ends inside the screen at 286).
+0x00DFE E638 E652 box width 56 -> 82 (mov #82,r6 at 0x00280DFE)
+0x00EF2 00F5 010F number x 245 -> 271 (constant used at 0x00280E20)

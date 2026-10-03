@@ -1,0 +1,27 @@
+# MINI00.BZ: the "look this way" mini-game (こっちむいてホイ, from the MOOD UP GAME).
+# Game overlay: loads at 0x00280000. Same format as translations.tsv, plus layout boxes:
+#   box <TAB> table offset,  then one "|" line per screen line with {color} tags,  then endbox.
+#   Colors: {0} black, {3} red, {4} blue, {5} green. {c,h,mask} = color c, flashes color h while
+#   the buttons in 'mask' are held (used by control hints). Lines are centered automatically and the
+#   box grows to fit. See tools\textpatch.cs for details.
+# Full list of this overlay's text: notes\script-MINI00.tsv
+#
+0x01050	こっちむいてホイ!	LOOK THIS WAY!	title box. "Look this way, hoi!": a Japanese pointing game
+0x0105C	ポーズ!!	PAUSE!!
+0x01068	ごきげん	MOOD	label before the hearts (4 letters, like the status panel)
+#
+# Instructions: "Point the same way as your Tamagotchi!"
+box	0x010F0
+|{0}POINT THE {5}SAME
+|{5}WAY {0}AS YOUR
+|{4}TAMAGOTCHI{0}!
+endbox
+#
+# Controls hint, bottom right. Each line flashes red while its direction is held.
+# In the bold font < and > are arrows. The original box already reaches the screen's right edge,
+# so keep these lines to 10 letters or fewer. Left-aligned so the left arrow sits at the box's left
+# edge and the right arrow at its right edge.
+box	0x01150	left
+|{5,3,0040}<{0,3,0040} LEFT
+|{0,3,0080}RIGHT {5,3,0080}>
+endbox

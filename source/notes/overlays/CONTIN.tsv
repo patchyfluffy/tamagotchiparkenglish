@@ -1,0 +1,49 @@
+# CONTIN.BZ: the panel contest (パネルでドンドン!, the IQ CONTEST). Format: see MINI00.tsv.
+# Full text list: notes\script-CONTIN.tsv. Box list: notes\boxes-CONTIN.txt.
+#
+0x01884	パネルでドンドン!	PANEL BANG BANG!	title box. ドンドン doubles the IQ game's ドン ("bang"; どんどん also means "faster and faster"). The name spoofs the puzzle game Panel de Pon.
+0x01898	ポーズ!!	PAUSE!!
+0x018A4	じゅんい	RANK	label above the ranking lamps
+0x018AC	ヨーイ	READY
+0x018B4	どん!!	GO!!
+0x01904	やったね! ゆうしょうだ!	YOU DID IT! YOU WIN!
+0x01914	よしよし! 2ばんだ!	NICE! 2ND PLACE!
+0x01924	まずまず! 3ばんだ!	NOT BAD! 3RD PLACE!
+0x01934	ざんねん! しっかく	TOO BAD! YOU LOST!	"too bad! disqualified"
+# Panel letters (see MINI01.tsv). Sets: たまごっち -> PARK!, あいうえお -> 12345, パネルでドン -> JUMBLE. All 16 must look different: decoys come from the other sets.
+0x018BC	た	P
+0x018C0	ま	A
+0x018C4	ご	R
+0x018C8	っ	K
+0x018CC	ち	!
+0x018D0	あ	1
+0x018D4	い	2
+0x018D8	う	3
+0x018DC	え	4
+0x018E0	お	5
+0x018E4	パ	J
+0x018EC	ネ	U
+0x018F0	ル	M
+0x018F4	で	B
+0x018F8	ド	L
+0x01900	ン	E
+# "Chances left" box (left side). Widened in CONTIN-code.txt.
+0x01B90	チャンス	TRIES
+0x01B97	のこり	LEFT
+#
+# Instructions: "Arrange the panels like the example! Finish before the rank lamps light up to win!"
+box	0x01A84
+|{3}LINE UP {0}THE {4}PANELS
+|{5}JUST LIKE {0}THE
+|{0}EXAMPLE!
+|
+|{0}FINISH BEFORE THE
+|{4}RANK LAMPS {0}LIGHT
+|{0}UP TO {3}WIN{0}!
+endbox
+#
+# Controls: A/C = choose, left/right = move.
+box	0x01B2C	left
+|{5,3,0004}A{5,3,0002}C{0}:{0,3,0006}SELECT
+|{5,3,00C0}<>{0}:{0,3,00C0}MOVE
+endbox

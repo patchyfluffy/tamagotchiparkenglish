@@ -1,0 +1,5 @@
+# Code changes in CONTIN (offsets within the unpacked overlay; it loads at 0x00280000).
+# "Chances left" box: drawn at x=20 with width 56, number at x=61. Same fix as MINI01:
+# width 56 -> 82, number x 61 -> 87, so "TRIES / LEFT n" fits.
+0x013F2 E638 E652 box width 56 -> 82 (mov #82,r6 at 0x002813F2)
+0x0141A E53D E557 number x 61 -> 87 (mov #87,r5 at 0x0028141A)

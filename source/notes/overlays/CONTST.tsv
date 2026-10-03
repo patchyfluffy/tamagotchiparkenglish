@@ -1,0 +1,61 @@
+# CONTST.BZ: the race contest (かけっこ, the FITNESS CONTEST). Format: see MINI00.tsv.
+# Full text list: notes\script-CONTST.tsv. Box list: notes\boxes-CONTST.txt.
+# Not translated: BASE / SPEED / ADDLIM and おなか / からだ / スピード at 0x027DC-0x02804 (debug display).
+#
+0x02604	CAPAっち	CAPA[]	a character name
+0x0260C	おいおい!ランク0だって!?そりゃないだろ?!	HEY! RANK 0?! NO WAY?!	shown if the rank comes out as 0 (should never happen)
+0x02628	かけっこヨーイどん!	READY, SET, RACE!	title box: "footrace, ready, go!"
+0x02638	ポーズ!!	PAUSE!!
+0x02646	の	{empty}	"の" ("'s"): the lane intro shows "<species>の" then "<name>". Left empty: in English the species name stands alone. (The code copies 2 bytes from here.)
+0x02674	いちについて	ON YOUR MARKS
+0x0267C	ヨーイ	SET
+0x02684	どん!!	GO!!
+0x02A3C	?コース	LANE ?	the lane number goes over the ? (6th character; moved from the 1st in CONTST-code.txt)
+# Results
+0x02744	やったね! ゆうしょうだ!	YOU DID IT! YOU WIN!
+0x02754	よしよし! 2ばんだ!	NICE! 2ND PLACE!
+0x02764	まずまず! 3ばんだ!	NOT BAD! 3RD PLACE!
+0x02774	ざんねん! 4ばんだ!	TOO BAD! 4TH PLACE!
+0x02784	・・・ビリ・・・	...LAST PLACE...
+# Rival runners. [] = squeezed TCHI.
+0x0268C	こばっち	KOBA[]
+0x02694	ひろっち	HIRO[]
+0x0269C	やなっち	YANA[]
+0x026A4	かわっち	KAWA[]
+0x026AC	もとっち	MOTO[]
+0x026B4	えむっち	EMU[]
+0x026BC	ひでっち	HIDE[]
+0x026C4	ちぃっち	CHII[]
+0x026CC	わだっち	WADA[]
+0x026D4	みほっち	MIHO[]
+0x026DC	たかっち	TAKA[]
+0x026E4	むららっち	MURARA[]
+0x026EC	はやをっち	HAYAO[]
+0x026F4	むたっち	MUTA[]
+0x026FC	りきっち	RIKI[]
+0x02704	ひろよっち	HIROYO[]
+0x0270C	ばばっち	BABA[]
+0x02714	たつみっち	TATSUMI[]
+0x0271C	かんじっち	KANJI[]
+0x02724	じゅんっち	JUN[]
+0x0272C	ぼんげっち	BONGE[]
+0x02734	ななっち	NANA[]
+0x0273C	ねねっち	NENE[]
+#
+# Instructions: "Be number one, reach the goal fastest!"
+box	0x029A0
+|{0}BE THE {5}FASTEST
+|{3}TO THE GOAL{0}!
+endbox
+#
+# Controls: A/C = speed up.
+box	0x029DC	left
+|{5,3,0004,4}A{5,3,0002,4}C{0}:{0,3,0006,4}SPEED UP
+endbox
+#
+# Gauges: speed and stamina bars are drawn after the label. The original label is 4 letters
+# plus 5 spaces on the first line; keep the same widths ({_6} = 6 spaces: SPD + 6 = 9 letter spaces).
+box	0x02A18	left
+|SPD{_6}
+|STAM
+endbox

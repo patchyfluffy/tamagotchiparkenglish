@@ -1,0 +1,15 @@
+# TEST BUILDS ONLY (build.ps1 -Unlock): always show the title menu's hidden options ENDING, CHARACTER
+# and SOUNDTEST, normally switched on by holding A+B+C+X+Y+Z+L+R at boot (flags 0x06049B50/0x06049B51).
+# Format as in code-patches.txt. Not part of normal builds.
+0x123F6 8900 0009 title menu: always allow 6 entries (cursor limit)
+0x1255C 8905 0009 title menu: always draw ENDING
+0x12572 8905 0009 title menu: always draw CHARACTER
+0x12588 8905 0009 title menu: always draw SOUNDTEST
+0x123E0 6630666C2659 E60100090009 title menu: treat the ENDING flag as set (the cursor skipped option 3 otherwise)
+# Park stage (byte 0x06045E06 = game state + 18: 0/1/2 = stage 1/2/3, pet limits 3/5/8 from the table at 0x06042DB4).
+# Normally the stage goes up at a season change (every 2 days) only if the park is full (flag 0x06049B4F).
+# Test builds skip the 'park is full' requirement, so the park grows at each season change up to stage 3.
+0x12D62 890A 0009 park grows at every season change
+# Care menu: when you click a pet, 0x0601A818 sets the menu flags (0x0607E7CC) to 11 for a normal pet and 27 for an
+# angel (type 3); bit 0x10 opens the angels' care menu (PRAISE, GUTS UP GAME). Test builds give every pet the angel menu.
+0xA81A E10B E11B every pet gets the angel care menu
